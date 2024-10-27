@@ -9,4 +9,5 @@ public interface BaseCRUDDao {
     boolean deletarPorId(int id);
     boolean atualizarPorId(int id, Model novoModel);
     List<? extends Model> consultarTodos();
+    Model consultarPorId(int id);
 }

@@ -1,6 +1,6 @@
 package com.biblioteca.dao;
 
-import com.biblioteca.model.EnderecoModel;
+import com.biblioteca.model.AutorModel;
 import com.biblioteca.model.Model;
 
 import java.sql.Connection;
@@ -9,21 +9,18 @@ import java.sql.ResultSet;
 import java.util.LinkedList;
 import java.util.List;
 
-public class EnderecoDao implements BaseCRUDDao {
+public class AutorDao implements BaseCRUDDao {
     @Override
     public boolean inserir(Model model) {
-        EnderecoModel enderecoModel = (EnderecoModel) model;
-        String sql = "INSERT INTO endereco (rua, bairro, numero, complemento) VALUES (?, ?, ?, ?)";
+        AutorModel autorModel = (AutorModel) model;
+        String sql = "INSERT INTO autor (nome) VALUES (?)";
 
         try {
             Connection conexao = Conexao.conectar();
 
             if (conexao != null) {
                 PreparedStatement statement = conexao.prepareStatement(sql);
-                statement.setString(1, enderecoModel.getRua());
-                statement.setString(2, enderecoModel.getBairro());
-                statement.setInt(3, enderecoModel.getNumero());
-                statement.setString(4, enderecoModel.getComplemento());
+                statement.setString(1, autorModel.getNome());
                 statement.executeUpdate();
 
                 statement.close();
@@ -40,7 +37,7 @@ public class EnderecoDao implements BaseCRUDDao {
 
     @Override
     public boolean deletarPorId(int id) {
-        String sql = "DELETE FROM endereco WHERE id = ?";
+        String sql = "DELETE FROM autor WHERE id = ?";
 
         try {
             Connection conexao = Conexao.conectar();
@@ -64,19 +61,16 @@ public class EnderecoDao implements BaseCRUDDao {
 
     @Override
     public boolean atualizarPorId(int id, Model novoModel) {
-        EnderecoModel enderecoModel = (EnderecoModel) novoModel;
-        String sql = "UPDATE endereco SET rua = ?, bairro = ?, numero = ?, complemento = ? WHERE id = ?";
+        AutorModel autorModel = (AutorModel) novoModel;
+        String sql = "UPDATE autor SET nome = ? WHERE id = ?";
 
         try {
             Connection conexao = Conexao.conectar();
 
             if (conexao != null) {
                 PreparedStatement statement = conexao.prepareStatement(sql);
-                statement.setString(1, enderecoModel.getRua());
-                statement.setString(2, enderecoModel.getBairro());
-                statement.setInt(3, enderecoModel.getNumero());
-                statement.setString(4, enderecoModel.getComplemento());
-                statement.setInt(5, id);
+                statement.setString(1, autorModel.getNome());
+                statement.setInt(2, id);
                 statement.executeUpdate();
 
                 statement.close();
@@ -92,9 +86,9 @@ public class EnderecoDao implements BaseCRUDDao {
     }
 
     @Override
-    public List<EnderecoModel> consultarTodos() {
-        LinkedList<EnderecoModel> enderecos = new LinkedList<>();
-        String sql = "SELECT * FROM endereco";
+    public List<AutorModel> consultarTodos() {
+        LinkedList<AutorModel> autores = new LinkedList<>();
+        String sql = "SELECT * FROM autor";
 
         try {
             Connection conexao = Conexao.conectar();
@@ -104,11 +98,7 @@ public class EnderecoDao implements BaseCRUDDao {
                 ResultSet resultado = statement.executeQuery();
 
                 while (resultado.next()) {
-                    enderecos.add(new EnderecoModel(resultado.getInt("id"),
-                            resultado.getString("rua"),
-                            resultado.getString("bairro"),
-                            resultado.getInt("numero"),
-                            resultado.getString("complemento")));
+                    autores.add(new AutorModel(resultado.getInt("id"), resultado.getString("nome")));
                 }
 
                 statement.close();
@@ -118,6 +108,34 @@ public class EnderecoDao implements BaseCRUDDao {
             System.out.println(err.getMessage());
         }
 
-        return enderecos;
+        return autores;
+    }
+
+    @Override
+    public Model consultarPorId(int id) {
+        AutorModel autor = new AutorModel();
+        String sql = "SELECT * FROM autor WHERE id = ?";
+
+        try {
+            Connection conexao = Conexao.conectar();
+
+            if (conexao != null) {
+                PreparedStatement statement = conexao.prepareStatement(sql);
+                statement.setInt(1, id);
+                ResultSet resultado = statement.executeQuery();
+
+                while (resultado.next()) {
+                    autor = new AutorModel(resultado.getInt("id"),
+                            resultado.getString("nome"));
+                }
+
+                statement.close();
+                conexao.close();
+            }
+        } catch (Exception err) {
+            System.out.println(err.getMessage());
+        }
+
+        return autor;
     }
 }

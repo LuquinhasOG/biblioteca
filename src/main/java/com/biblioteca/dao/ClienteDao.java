@@ -13,7 +13,7 @@ public class ClienteDao implements BaseCRUDDao {
     @Override
     public boolean inserir(Model model) {
         ClienteModel clienteModel = (ClienteModel) model;
-        String sql = "INSERT INTO cliente (nome, cpf, data_nascimento, numero_telefone, rua, bairro, numero, complemento) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO cliente (nome, cpf, data_nascimento, numero_telefone, rua, bairro, numero, complemento, ativo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try {
             Connection conexao = Conexao.conectar();
@@ -28,6 +28,7 @@ public class ClienteDao implements BaseCRUDDao {
                 statement.setString(6, clienteModel.getBairro());
                 statement.setInt(7, clienteModel.getNumero());
                 statement.setString(8, clienteModel.getComplemento());
+                statement.setBoolean(8, clienteModel.isAtivo());
                 statement.executeUpdate();
 
                 statement.close();
@@ -69,7 +70,7 @@ public class ClienteDao implements BaseCRUDDao {
     @Override
     public boolean atualizarPorId(int id, Model novoModel) {
         ClienteModel enderecoModel = (ClienteModel) novoModel;
-        String sql = "UPDATE cliente SET nome = ?, cpf = ?, data_nascimento = ?, rua = ?, bairro = ?, numero = ?, complemento = ? WHERE id = ?";
+        String sql = "UPDATE cliente SET nome = ?, cpf = ?, data_nascimento = ?, rua = ?, bairro = ?, numero = ?, complemento = ?, ativo = ? WHERE id = ?";
 
         try {
             Connection conexao = Conexao.conectar();
@@ -83,7 +84,8 @@ public class ClienteDao implements BaseCRUDDao {
                 statement.setString(5, enderecoModel.getBairro());
                 statement.setInt(6, enderecoModel.getNumero());
                 statement.setString(7, enderecoModel.getComplemento());
-                statement.setInt(8, id);
+                statement.setBoolean(8, enderecoModel.isAtivo());
+                statement.setInt(9, id);
                 statement.executeUpdate();
 
                 statement.close();
@@ -119,7 +121,8 @@ public class ClienteDao implements BaseCRUDDao {
                             resultado.getString("rua"),
                             resultado.getString("bairro"),
                             resultado.getInt("numero"),
-                            resultado.getString("complemento")));
+                            resultado.getString("complemento"),
+                            resultado.getBoolean("ativo")));
                 }
 
                 statement.close();
@@ -154,7 +157,8 @@ public class ClienteDao implements BaseCRUDDao {
                             resultado.getString("rua"),
                             resultado.getString("bairro"),
                             resultado.getInt("numero"),
-                            resultado.getString("complemento"));
+                            resultado.getString("complemento"),
+                            resultado.getBoolean("ativo"));
                 }
 
                 statement.close();

@@ -1,6 +1,6 @@
 package com.biblioteca.dao;
 
-import com.biblioteca.model.EditoraModel;
+import com.biblioteca.model.EstadoAluguelModel;
 import com.biblioteca.model.Model;
 
 import java.sql.Connection;
@@ -9,18 +9,18 @@ import java.sql.ResultSet;
 import java.util.LinkedList;
 import java.util.List;
 
-public class EditoraDao implements BaseCRUDDao {
+public class EstadoAluguelDao implements BaseCRUDDao {
     @Override
     public boolean inserir(Model model) {
-        EditoraModel clienteModel = (EditoraModel) model;
-        String sql = "INSERT INTO editora (nome) VALUES (?)";
+        EstadoAluguelModel estadoAluguelModel = (EstadoAluguelModel) model;
+        String sql = "INSERT INTO estado_aluguel (descricao) VALUES (?)";
 
         try {
             Connection conexao = Conexao.conectar();
 
             if (conexao != null) {
                 PreparedStatement statement = conexao.prepareStatement(sql);
-                statement.setString(1, clienteModel.getNome());
+                statement.setString(1, estadoAluguelModel.getDescricao());
                 statement.executeUpdate();
 
                 statement.close();
@@ -37,7 +37,7 @@ public class EditoraDao implements BaseCRUDDao {
 
     @Override
     public boolean deletarPorId(int id) {
-        String sql = "DELETE FROM editora WHERE id = ?";
+        String sql = "DELETE FROM estado_aluguel WHERE id = ?";
 
         try {
             Connection conexao = Conexao.conectar();
@@ -61,15 +61,15 @@ public class EditoraDao implements BaseCRUDDao {
 
     @Override
     public boolean atualizarPorId(int id, Model novoModel) {
-        EditoraModel editoraModel = (EditoraModel) novoModel;
-        String sql = "UPDATE editora SET nome = ? WHERE id = ?";
+        EstadoAluguelModel estadoAluguelModel = (EstadoAluguelModel) novoModel;
+        String sql = "UPDATE estado_aluguel SET descricao = ? WHERE id = ?";
 
         try {
             Connection conexao = Conexao.conectar();
 
             if (conexao != null) {
                 PreparedStatement statement = conexao.prepareStatement(sql);
-                statement.setString(1, editoraModel.getNome());
+                statement.setString(1, estadoAluguelModel.getDescricao());
                 statement.setInt(2, id);
                 statement.executeUpdate();
 
@@ -86,9 +86,9 @@ public class EditoraDao implements BaseCRUDDao {
     }
 
     @Override
-    public List<EditoraModel> consultarTodos() {
-        LinkedList<EditoraModel> editoras = new LinkedList<>();
-        String sql = "SELECT * FROM editora";
+    public List<EstadoAluguelModel> consultarTodos() {
+        LinkedList<EstadoAluguelModel> estadoAlugueis = new LinkedList<>();
+        String sql = "SELECT * FROM estado_aluguel";
 
         try {
             Connection conexao = Conexao.conectar();
@@ -98,7 +98,7 @@ public class EditoraDao implements BaseCRUDDao {
                 ResultSet resultado = statement.executeQuery();
 
                 while (resultado.next()) {
-                    editoras.add(new EditoraModel(resultado.getInt("id"), resultado.getString("nome")));
+                    estadoAlugueis.add(new EstadoAluguelModel(resultado.getInt("id"), resultado.getString("descricao")));
                 }
 
                 statement.close();
@@ -108,13 +108,13 @@ public class EditoraDao implements BaseCRUDDao {
             System.out.println(err.getMessage());
         }
 
-        return editoras;
+        return estadoAlugueis;
     }
 
     @Override
     public Model consultarPorId(int id) {
-        EditoraModel editora = new EditoraModel();
-        String sql = "SELECT * FROM editora WHERE id = ?";
+        EstadoAluguelModel estadoAluguel = new EstadoAluguelModel();
+        String sql = "SELECT * FROM estado_aluguel WHERE id = ?";
 
         try {
             Connection conexao = Conexao.conectar();
@@ -125,8 +125,8 @@ public class EditoraDao implements BaseCRUDDao {
                 ResultSet resultado = statement.executeQuery();
 
                 while (resultado.next()) {
-                    editora = new EditoraModel(resultado.getInt("id"),
-                            resultado.getString("nome"));
+                    estadoAluguel = new EstadoAluguelModel(resultado.getInt("id"),
+                            resultado.getString("descricao"));
                 }
 
                 statement.close();
@@ -136,6 +136,6 @@ public class EditoraDao implements BaseCRUDDao {
             System.out.println(err.getMessage());
         }
 
-        return editora;
+        return estadoAluguel;
     }
 }

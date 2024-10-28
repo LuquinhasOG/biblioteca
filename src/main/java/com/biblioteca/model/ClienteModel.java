@@ -13,10 +13,11 @@ public class ClienteModel implements Model {
     private String bairro;
     private int numero;
     private String complemento;
+    private boolean ativo;
 
     public ClienteModel() {}
 
-    public ClienteModel(String nome, String cpf, Date dataNascimento, String numeroTelefone, String rua, String bairro, int numero, String complemento) {
+    public ClienteModel(String nome, String cpf, Date dataNascimento, String numeroTelefone, String rua, String bairro, int numero, String complemento, boolean ativo) {
         this.nome = nome;
         this.cpf = cpf;
         this.dataNascimento = dataNascimento;
@@ -25,9 +26,10 @@ public class ClienteModel implements Model {
         this.bairro = bairro;
         this.numero = numero;
         this.complemento = complemento;
+        this.ativo = ativo;
     }
 
-    public ClienteModel(int id, String nome, String cpf, Date dataNascimento, String numeroTelefone, String rua, String bairro, int numero, String complemento) {
+    public ClienteModel(int id, String nome, String cpf, Date dataNascimento, String numeroTelefone, String rua, String bairro, int numero, String complemento, boolean ativo) {
         this.id = id;
         this.nome = nome;
         this.cpf = cpf;
@@ -37,6 +39,7 @@ public class ClienteModel implements Model {
         this.bairro = bairro;
         this.numero = numero;
         this.complemento = complemento;
+        this.ativo = ativo;
     }
 
     public int getId() {
@@ -109,5 +112,13 @@ public class ClienteModel implements Model {
 
     public void setComplemento(String complemento) {
         this.complemento = complemento;
+    }
+
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
     }
 }

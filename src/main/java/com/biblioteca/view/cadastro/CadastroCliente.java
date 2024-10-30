@@ -78,19 +78,21 @@ public class CadastroCliente extends JPanel {
 
         this.add(painelPrincipal);
 
-        btnCadastrar.addActionListener((ActionEvent event) -> {
-            ClienteDao clienteDao = new ClienteDao();
-            ClienteModel cliente = new ClienteModel(campoNome.getText(),
-                    campoCPF.getText(),
-                    Date.valueOf(campoDataNascimento.getText()),
-                    campoNumeroTelefone.getText(),
-                    campoRua.getText(),
-                    campoBairro.getText(),
-                    Integer.valueOf(campoNumero.getText()),
-                    campoComplemento.getText(),
-                    true);
+        btnCadastrar.addActionListener(this::actionPerformed);
+    }
 
-            clienteDao.inserir(cliente);
-        });
+    public void actionPerformed(ActionEvent event) {
+        ClienteDao clienteDao = new ClienteDao();
+        ClienteModel cliente = new ClienteModel(campoNome.getText(),
+                campoCPF.getText(),
+                Date.valueOf(campoDataNascimento.getText()),
+                campoNumeroTelefone.getText(),
+                campoRua.getText(),
+                campoBairro.getText(),
+                Integer.valueOf(campoNumero.getText()),
+                campoComplemento.getText(),
+                true);
+
+        clienteDao.inserir(cliente);
     }
 }

@@ -1,6 +1,7 @@
 package com.biblioteca.view;
 
 import com.biblioteca.view.cadastro.CadastroCliente;
+import com.biblioteca.view.consulta.ConsultaUsuario;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -61,9 +62,6 @@ public class Main extends JFrame {
         JMenuItem mntmNewMenuItem_1 = new JMenuItem("Consultar usuário");
         mnNewMenu.add(mntmNewMenuItem_1);
 
-        JMenuItem mntmNewMenuItem_2 = new JMenuItem("Excluir usuário");
-        mnNewMenu.add(mntmNewMenuItem_2);
-
         JMenu mnNewMenu_1 = new JMenu("Livros");
         menuBar.add(mnNewMenu_1);
 
@@ -94,8 +92,7 @@ public class Main extends JFrame {
         contentPane.setBackground(new Color(240, 252, 252));
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-//        setContentPane(contentPane);
-        setContentPane(new CadastroCliente());
+        setContentPane(contentPane);
 
 //        try {
 //            img = ImageIO.read(new File("C:\\Users\\Nivaldo\\eclipse-workspace\\NewAps\\src\\Books.jpg"));
@@ -141,6 +138,10 @@ public class Main extends JFrame {
 
         mntmNewMenuItem.addActionListener((ActionEvent event) -> {
             setContentPane(new CadastroCliente());
+        });
+
+        mntmNewMenuItem_1.addActionListener((ActionEvent event) -> {
+            setContentPane(new ConsultaUsuario());
         });
     }
 }

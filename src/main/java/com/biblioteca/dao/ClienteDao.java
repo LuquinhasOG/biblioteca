@@ -28,7 +28,7 @@ public class ClienteDao implements BaseCRUDDao {
                 statement.setString(6, clienteModel.getBairro());
                 statement.setInt(7, clienteModel.getNumero());
                 statement.setString(8, clienteModel.getComplemento());
-                statement.setBoolean(8, clienteModel.isAtivo());
+                statement.setBoolean(9, clienteModel.isAtivo());
                 statement.executeUpdate();
 
                 statement.close();

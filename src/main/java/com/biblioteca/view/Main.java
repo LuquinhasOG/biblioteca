@@ -1,26 +1,21 @@
 package com.biblioteca.view;
 
 import com.biblioteca.view.cadastro.CadastroCliente;
-import com.biblioteca.view.consulta.ConsultaUsuario;
+import com.biblioteca.view.consulta.*;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import javax.imageio.ImageIO;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.ImageIcon;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class Main extends JFrame {
     private JPanel contentPane;
@@ -74,20 +69,20 @@ public class Main extends JFrame {
         JMenu mnNewMenu_2 = new JMenu("Consultas");
         menuBar.add(mnNewMenu_2);
 
-        JMenuItem mntmNewMenuItem_5 = new JMenuItem("Livros alugados");
-        mnNewMenu_2.add(mntmNewMenuItem_5);
+        JMenuItem itemMenuConsulta1 = new JMenuItem("Clientes");
+        JMenuItem itemMenuConsulta2 = new JMenuItem("Editoras");
+        JMenuItem itemMenuConsulta3 = new JMenuItem("Autor");
+        JMenuItem itemMenuConsulta4 = new JMenuItem("Livros");
+        JMenuItem itemMenuConsulta5 = new JMenuItem("Aluguel");
+        JMenuItem itemMenuConsulta6 = new JMenuItem("Multa");
+        mnNewMenu_2.add(itemMenuConsulta1);
+        mnNewMenu_2.add(itemMenuConsulta2);
+        mnNewMenu_2.add(itemMenuConsulta3);
+        mnNewMenu_2.add(itemMenuConsulta4);
+        mnNewMenu_2.add(itemMenuConsulta5);
+        mnNewMenu_2.add(itemMenuConsulta6);
 
-        JMenuItem mntmNewMenuItem_7 = new JMenuItem("Livros disponiveis");
-        mnNewMenu_2.add(mntmNewMenuItem_7);
 
-        JMenu mnNewMenu_3 = new JMenu("Menu de livros");
-        menuBar.add(mnNewMenu_3);
-
-        JMenuItem mntmNewMenuItem_8 = new JMenuItem("Cadastrar novo livro");
-        mnNewMenu_3.add(mntmNewMenuItem_8);
-
-        JMenuItem mntmNewMenuItem_6 = new JMenuItem("Excluir livro cadastrado");
-        mnNewMenu_3.add(mntmNewMenuItem_6);
         contentPane = new JPanel();
         contentPane.setBackground(new Color(240, 252, 252));
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -140,8 +135,28 @@ public class Main extends JFrame {
             setContentPane(new CadastroCliente());
         });
 
-        mntmNewMenuItem_1.addActionListener((ActionEvent event) -> {
-            setContentPane(new ConsultaUsuario());
+        itemMenuConsulta1.addActionListener((ActionEvent event) -> {
+            setContentPane(new ConsultaCliente());
+        });
+
+        itemMenuConsulta2.addActionListener((ActionEvent event) -> {
+            setContentPane(new ConsultaEditora());
+        });
+
+        itemMenuConsulta3.addActionListener((ActionEvent event) -> {
+            setContentPane(new ConsultaAutor());
+        });
+
+        itemMenuConsulta4.addActionListener((ActionEvent event) -> {
+            setContentPane(new ConsultaLivro());
+        });
+
+        itemMenuConsulta5.addActionListener((ActionEvent event) -> {
+            setContentPane(new ConsultaAluguel());
+        });
+
+        itemMenuConsulta6.addActionListener((ActionEvent event) -> {
+            setContentPane(new ConsultaMulta());
         });
     }
 }

@@ -75,3 +75,34 @@ CREATE TABLE multa (
     valor double precision DEFAULT 0,
 	pago BOOLEAN DEFAULT FALSE
 );
+
+CREATE OR REPLACE FUNCTION atualiza_livros_desponiveis_aluguel()
+	RETURNS TRIGGER AS $$
+	BEGIN
+		UPDATE livro
+			SET quantidade_disponivel = (SELECT quantidade_estoque FROM livro WHERE id = OLD.id_livro) - 
+										(SELECT COUNT(*) FROM aluguel WHERE id_estado_aluguel <> 2 AND id_livro = OLD.id_livro GROUP BY id_livro)
+			WHERE id = OLD.id_livro;
+			
+		RETURN OLD;
+	END;
+	$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION atualiza_estado_aluguel()
+	RETURNS TRIGGER AS $$
+	BEGIN
+		IF NEW.data_devolucao IS NOT NULL THEN
+			NEW.id_estado_aluguel = 2;
+		END IF;
+		
+		RETURN NEW;
+	END;
+	$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE TRIGGER trigger_atualiza_estado_aluguel
+	BEFORE UPDATE ON aluguel
+	FOR EACH ROW EXECUTE PROCEDURE atualiza_estado_aluguel();
+	
+CREATE OR REPLACE TRIGGER trigger_atualiza_livros_desponiveis_aluguel
+	AFTER UPDATE OR INSERT ON aluguel
+	FOR EACH ROW EXECUTE PROCEDURE atualiza_livros_desponiveis_aluguel();

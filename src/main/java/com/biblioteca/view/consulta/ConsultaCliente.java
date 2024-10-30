@@ -9,16 +9,14 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.List;
 
-public class ConsultaUsuario extends JPanel {
+public class ConsultaCliente extends JPanel {
     private JPanel painelPrincipal;
     private JTable tabela;
     private DefaultTableModel modelo = new DefaultTableModel();
     private ClienteDao clienteDao = new ClienteDao();
-    JTextField campoIdInicio = new JTextField();
-    JTextField campoIdFim = new JTextField();
-    JTextField campoNome = new JTextField();
+    private CampoConsulta campoConsulta = new CampoConsulta();
 
-    public ConsultaUsuario() {
+    public ConsultaCliente() {
         painelPrincipal = new JPanel(new BorderLayout());
 
         tabela = new JTable(modelo);
@@ -35,38 +33,15 @@ public class ConsultaUsuario extends JPanel {
         pesquisarTodos();
 
         JPanel painelTable = new JPanel(new BorderLayout());
-        JPanel consultas = new JPanel(new GridLayout(2, 1));
-        JPanel consultaId = new JPanel();
-        JPanel consultaNome = new JPanel();
         JPanel botoesBaixo = new JPanel();
 
-        JButton btnConsultarId = new JButton("consultar");
-        JButton btnConsultarNome = new JButton("consultar");
         JButton btnDesativarCliente = new JButton("desativar cliente");
         JButton btnAtivarCliente = new JButton("ativar cliente");
 
-        campoIdInicio.setText("0");
-        campoIdInicio.setColumns(10);
-        campoIdFim.setText("9999");
-        campoIdFim.setColumns(10);
-        campoNome.setColumns(20);
-        btnConsultarId.addActionListener(this::consultarPorId);
-        btnConsultarNome.addActionListener(this::consultarPorNome);
+        campoConsulta.setConsultaIdActionListener(this::consultarPorId);
+        campoConsulta.setConsultaNomeActionListener(this::consultarPorNome);
         btnDesativarCliente.addActionListener(this::desativarCliente);
         btnAtivarCliente.addActionListener(this::ativarCliente);
-
-        consultaId.add(new Label("id início:"));
-        consultaId.add(campoIdInicio);
-        consultaId.add(new Label("id fim:"));
-        consultaId.add(campoIdFim);
-        consultaId.add(btnConsultarId);
-
-        consultaNome.add(new Label("Nome:"));
-        consultaNome.add(campoNome);
-        consultaNome.add(btnConsultarNome);
-
-        consultas.add(consultaNome);
-        consultas.add(consultaId);
 
         painelTable.add(tabela.getTableHeader(), BorderLayout.NORTH);
         painelTable.add(tabela);
@@ -74,7 +49,7 @@ public class ConsultaUsuario extends JPanel {
         botoesBaixo.add(btnAtivarCliente);
         botoesBaixo.add(btnDesativarCliente);
 
-        painelPrincipal.add(consultas, BorderLayout.NORTH);
+        painelPrincipal.add(campoConsulta, BorderLayout.NORTH);
         painelPrincipal.add(painelTable);
         painelPrincipal.add(botoesBaixo, BorderLayout.SOUTH);
 
@@ -141,11 +116,11 @@ public class ConsultaUsuario extends JPanel {
     }
 
     public void consultarPorId(ActionEvent event) {
-        pesquisarIntervaloId(Integer.parseInt(campoIdInicio.getText()), Integer.parseInt(campoIdFim.getText()));
+        pesquisarIntervaloId(Integer.parseInt(campoConsulta.getIdInicio()), Integer.parseInt(campoConsulta.getIdFim()));
     }
 
     public void consultarPorNome(ActionEvent event) {
-        pesquisarNome(campoNome.getText());
+        pesquisarNome(campoConsulta.getNome());
     }
 
     public void desativarCliente(ActionEvent event) {

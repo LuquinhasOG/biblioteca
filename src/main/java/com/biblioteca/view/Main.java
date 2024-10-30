@@ -1,24 +1,27 @@
 package com.biblioteca.view;
 
-import java.awt.Color;
-import java.awt.EventQueue;
+import com.biblioteca.view.cadastro.CadastroCliente;
+
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.imageio.ImageIO;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.ImageIcon;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import java.awt.Font;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class Main extends JFrame {
-
-    private static final long serialVersionUID = 1L;
     private JPanel contentPane;
     private BufferedImage img = null;
 
@@ -52,10 +55,10 @@ public class Main extends JFrame {
         JMenu mnNewMenu = new JMenu("Usuários");
         menuBar.add(mnNewMenu);
 
-        JMenuItem mntmNewMenuItem = new JMenuItem("Cadastrar cliente");
+        JMenuItem mntmNewMenuItem = new JMenuItem("Cadastrar usuário");
         mnNewMenu.add(mntmNewMenuItem);
 
-        JMenuItem mntmNewMenuItem_1 = new JMenuItem("Consultar cliente");
+        JMenuItem mntmNewMenuItem_1 = new JMenuItem("Consultar usuário");
         mnNewMenu.add(mntmNewMenuItem_1);
 
         JMenuItem mntmNewMenuItem_2 = new JMenuItem("Excluir usuário");
@@ -91,7 +94,8 @@ public class Main extends JFrame {
         contentPane.setBackground(new Color(240, 252, 252));
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-        setContentPane(contentPane);
+//        setContentPane(contentPane);
+        setContentPane(new CadastroCliente());
 
 //        try {
 //            img = ImageIO.read(new File("C:\\Users\\Nivaldo\\eclipse-workspace\\NewAps\\src\\Books.jpg"));
@@ -133,7 +137,10 @@ public class Main extends JFrame {
 
         contentPane.setLayout(gl_contentPane);
 
-
         contentPane.add(label);
+
+        mntmNewMenuItem.addActionListener((ActionEvent event) -> {
+            setContentPane(new CadastroCliente());
+        });
     }
 }

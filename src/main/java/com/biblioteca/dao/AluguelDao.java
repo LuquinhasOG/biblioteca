@@ -18,10 +18,10 @@ public class AluguelDao implements BaseCRUDDao {
     @Override
     public boolean inserir(Model model) {
         AluguelModel aluguelModel = (AluguelModel) model;
-        String sql = "INSERT INTO aluguel (id_cliente, id_livro, id_estado_aluguel, data_aluguel, data_devolucao, renovacoes) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO aluguel (id_cliente, id_livro, id_estado_aluguel, data_aluguel, data_devolucao, renovacoes) VALUES (?, ?, ?, ?, ?, ?)";
 
-        ClienteModel cliente = (ClienteModel) clienteDao.consultarPorId(((AluguelModel) model).getId());
-        LivroModel livro = (LivroModel) livroDao.consultarPorId(((AluguelModel) model).getId());
+        ClienteModel cliente = (ClienteModel) clienteDao.consultarPorId(aluguelModel.getIdCliente());
+        LivroModel livro = (LivroModel) livroDao.consultarPorId(aluguelModel.getIdLivro());
 
         if (livro == null || cliente == null || livro.getQuantidadeDisponivel() == 0 || !cliente.isAtivo()) {
             return false;

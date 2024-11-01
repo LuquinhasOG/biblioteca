@@ -1,14 +1,18 @@
 package com.biblioteca.view;
 
-import com.biblioteca.view.cadastro.CadastroAutor;
-import com.biblioteca.view.cadastro.CadastroCliente;
-import com.biblioteca.view.cadastro.CadastroEditora;
-import com.biblioteca.view.cadastro.CadastroLivro;
+import com.biblioteca.dao.AluguelDao;
+import com.biblioteca.dao.LivroDao;
+import com.biblioteca.dao.MultaDao;
+import com.biblioteca.model.AluguelModel;
+import com.biblioteca.model.LivroModel;
+import com.biblioteca.model.MultaModel;
+import com.biblioteca.view.cadastro.*;
 import com.biblioteca.view.consulta.*;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -53,7 +57,9 @@ public class Main extends JFrame {
         setBackground(c1);
 
         JMenu menu1 = new JMenu("Aluguel");
+        JMenuItem itemMenuCadastrar5 = new JMenuItem("Cadastro");
         JMenuItem itemMenuConsulta5 = new JMenuItem("Consulta");
+        menu1.add(itemMenuCadastrar5);
         menu1.add(itemMenuConsulta5);
 
         JMenu menu2 = new JMenu("Livro");
@@ -155,6 +161,10 @@ public class Main extends JFrame {
             setContentPane(new CadastroLivro());
         });
 
+        itemMenuCadastrar5.addActionListener((ActionEvent event) -> {
+            setContentPane(new CadastroAluguel());
+        });
+
         itemMenuConsulta1.addActionListener((ActionEvent event) -> {
             setContentPane(new ConsultaCliente());
         });
@@ -178,5 +188,30 @@ public class Main extends JFrame {
         itemMenuConsulta6.addActionListener((ActionEvent event) -> {
             setContentPane(new ConsultaMulta());
         });
+
+        aplicarMultas();
+    }
+
+    public void aplicarMultas() {
+        AluguelDao aluguelDao = new AluguelDao();
+        MultaDao multaDao = new MultaDao();
+        LivroDao livroDao = new LivroDao();
+        List<AluguelModel> alugueis = aluguelDao.consultarTodos();
+        MultaModel multa = new MultaModel();
+        LivroModel livro;
+
+        for (AluguelModel a : alugueis) {
+            if (a.getIdEstadoAluguel() == 1) {
+                    if ((System.currentTimeMillis() - a.getDataAluguel().getTime()) / 86400000 >= 7L *(a.getRenovacoes()+1)) {
+                        livro = (LivroModel) livroDao.consultarPorId(a.getIdLivro());
+                        a.setIdEstadoAluguel(3);
+                        aluguelDao.atualizarPorId(a.getId(), a);
+                        multa.setIdAluguel(a.getId());
+                        multa.setValor(livro.getPrecoAluguel());
+                        multa.setPago(false);
+                        multaDao.inserir(multa);
+                    }
+            }
+        }
     }
 }

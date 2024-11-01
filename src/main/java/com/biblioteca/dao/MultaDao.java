@@ -13,7 +13,7 @@ public class MultaDao implements BaseCRUDDao {
     @Override
     public boolean inserir(Model model) {
         MultaModel multaModel = (MultaModel) model;
-        String sql = "INSERT INTO multas (id_aluguel, valor, pago) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO multa (id_aluguel, valor, pago) VALUES (?, ?, ?)";
 
         try {
             Connection conexao = Conexao.conectar();
@@ -39,7 +39,7 @@ public class MultaDao implements BaseCRUDDao {
 
     @Override
     public boolean deletarPorId(int id) {
-        String sql = "DELETE FROM multas WHERE id = ?";
+        String sql = "DELETE FROM multa WHERE id = ?";
 
         try {
             Connection conexao = Conexao.conectar();
@@ -64,7 +64,7 @@ public class MultaDao implements BaseCRUDDao {
     @Override
     public boolean atualizarPorId(int id, Model novoModel) {
         MultaModel multaModel = (MultaModel) novoModel;
-        String sql = "UPDATE multas SET id_aluguel = ?, valor = ?, pago = ? WHERE id = ?";
+        String sql = "UPDATE multa SET id_aluguel = ?, valor = ?, pago = ? WHERE id = ?";
 
         try {
             Connection conexao = Conexao.conectar();
@@ -92,7 +92,7 @@ public class MultaDao implements BaseCRUDDao {
     @Override
     public List<MultaModel> consultarTodos() {
         LinkedList<MultaModel> multa = new LinkedList<>();
-        String sql = "SELECT * FROM multas";
+        String sql = "SELECT * FROM multa";
 
         try {
             Connection conexao = Conexao.conectar();
@@ -121,7 +121,7 @@ public class MultaDao implements BaseCRUDDao {
     @Override
     public Model consultarPorId(int id) {
         MultaModel multa = new MultaModel();
-        String sql = "SELECT * FROM multas WHERE id = ?";
+        String sql = "SELECT * FROM multa WHERE id = ?";
 
         try {
             Connection conexao = Conexao.conectar();

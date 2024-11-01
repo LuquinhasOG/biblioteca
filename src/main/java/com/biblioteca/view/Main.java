@@ -1,6 +1,9 @@
 package com.biblioteca.view;
 
+import com.biblioteca.view.cadastro.CadastroAutor;
 import com.biblioteca.view.cadastro.CadastroCliente;
+import com.biblioteca.view.cadastro.CadastroEditora;
+import com.biblioteca.view.cadastro.CadastroLivro;
 import com.biblioteca.view.consulta.*;
 
 import java.awt.*;
@@ -48,40 +51,45 @@ public class Main extends JFrame {
         setTitle("Biblioteca");
         Color c1 = new Color(166,220,237);
         setBackground(c1);
-        JMenu mnNewMenu = new JMenu("Usuários");
-        menuBar.add(mnNewMenu);
 
-        JMenuItem mntmNewMenuItem = new JMenuItem("Cadastrar usuário");
-        mnNewMenu.add(mntmNewMenuItem);
+        JMenu menu1 = new JMenu("Aluguel");
+        JMenuItem itemMenuConsulta5 = new JMenuItem("Consulta");
+        menu1.add(itemMenuConsulta5);
 
-        JMenuItem mntmNewMenuItem_1 = new JMenuItem("Consultar usuário");
-        mnNewMenu.add(mntmNewMenuItem_1);
+        JMenu menu2 = new JMenu("Livro");
+        JMenuItem itemMenuCadastrar4 = new JMenuItem("Cadastro");
+        JMenuItem itemMenuConsulta4 = new JMenuItem("Consulta");
+        menu2.add(itemMenuCadastrar4);
+        menu2.add(itemMenuConsulta4);
 
-        JMenu mnNewMenu_1 = new JMenu("Livros");
-        menuBar.add(mnNewMenu_1);
+        JMenu menu3 = new JMenu("Cliente");
+        JMenuItem itemMenuCadastrar1 = new JMenuItem("Cadastro");
+        JMenuItem itemMenuConsulta1 = new JMenuItem("Consulta");
+        menu3.add(itemMenuCadastrar1);
+        menu3.add(itemMenuConsulta1);
 
-        JMenuItem mntmNewMenuItem_3 = new JMenuItem("Alugar livros");
-        mnNewMenu_1.add(mntmNewMenuItem_3);
+        JMenu menu4 = new JMenu("Editora");
+        JMenuItem itemMenuCadastrar2 = new JMenuItem("Cadastro");
+        JMenuItem itemMenuConsulta2 = new JMenuItem("Consulta");
+        menu4.add(itemMenuCadastrar2);
+        menu4.add(itemMenuConsulta2);
 
-        JMenuItem mntmNewMenuItem_4 = new JMenuItem("Devolução de livros");
-        mnNewMenu_1.add(mntmNewMenuItem_4);
+        JMenu menu5 = new JMenu("Autor");
+        JMenuItem itemMenuCadastrar3 = new JMenuItem("Cadastro");
+        JMenuItem itemMenuConsulta3 = new JMenuItem("Consulta");
+        menu5.add(itemMenuCadastrar3);
+        menu5.add(itemMenuConsulta3);
 
-        JMenu mnNewMenu_2 = new JMenu("Consultas");
-        menuBar.add(mnNewMenu_2);
+        JMenu menu6 = new JMenu("Multas");
+        JMenuItem itemMenuConsulta6 = new JMenuItem("Consulta");
+        menu6.add(itemMenuConsulta6);
 
-        JMenuItem itemMenuConsulta1 = new JMenuItem("Clientes");
-        JMenuItem itemMenuConsulta2 = new JMenuItem("Editoras");
-        JMenuItem itemMenuConsulta3 = new JMenuItem("Autor");
-        JMenuItem itemMenuConsulta4 = new JMenuItem("Livros");
-        JMenuItem itemMenuConsulta5 = new JMenuItem("Aluguel");
-        JMenuItem itemMenuConsulta6 = new JMenuItem("Multa");
-        mnNewMenu_2.add(itemMenuConsulta1);
-        mnNewMenu_2.add(itemMenuConsulta2);
-        mnNewMenu_2.add(itemMenuConsulta3);
-        mnNewMenu_2.add(itemMenuConsulta4);
-        mnNewMenu_2.add(itemMenuConsulta5);
-        mnNewMenu_2.add(itemMenuConsulta6);
-
+        menuBar.add(menu1);
+        menuBar.add(menu2);
+        menuBar.add(menu3);
+        menuBar.add(menu4);
+        menuBar.add(menu5);
+        menuBar.add(menu6);
 
         contentPane = new JPanel();
         contentPane.setBackground(new Color(240, 252, 252));
@@ -131,8 +139,20 @@ public class Main extends JFrame {
 
         contentPane.add(label);
 
-        mntmNewMenuItem.addActionListener((ActionEvent event) -> {
+        itemMenuCadastrar1.addActionListener((ActionEvent event) -> {
             setContentPane(new CadastroCliente());
+        });
+
+        itemMenuCadastrar2.addActionListener((ActionEvent event) -> {
+            setContentPane(new CadastroEditora());
+        });
+
+        itemMenuCadastrar3.addActionListener((ActionEvent event) -> {
+            setContentPane(new CadastroAutor());
+        });
+
+        itemMenuCadastrar4.addActionListener((ActionEvent event) -> {
+            setContentPane(new CadastroLivro());
         });
 
         itemMenuConsulta1.addActionListener((ActionEvent event) -> {

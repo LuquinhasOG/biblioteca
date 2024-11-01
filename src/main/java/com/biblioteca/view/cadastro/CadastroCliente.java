@@ -23,6 +23,7 @@ public class CadastroCliente extends JPanel {
     public CadastroCliente() {
         painelPrincipal = new JPanel();
 
+        JLabel titulo = new JLabel("Cadastro Cliente");
         JLabel label1 = new JLabel("Nome");
         JLabel label2 = new JLabel("CPF");
         JLabel label3 = new JLabel("Data Nascimento");
@@ -31,6 +32,7 @@ public class CadastroCliente extends JPanel {
         JLabel label6 = new JLabel("Bairro");
         JLabel label7 = new JLabel("Numero");
         JLabel label8 = new JLabel("Complemento");
+        titulo.setFont(new Font("arial", Font.BOLD, 16));
 
         JPanel panelEsquerda = new JPanel(new GridLayout(8, 1));
         JPanel panelDireita = new JPanel(new GridLayout(8, 1));
@@ -67,12 +69,13 @@ public class CadastroCliente extends JPanel {
         panelDireita.add(campoNumero);
         panelDireita.add(campoComplemento);
 
-        JPanel formulario = new JPanel();
+        JPanel formulario = new JPanel(new BorderLayout());
         JPanel campos = new JPanel(new GridLayout(1, 2));
         campos.add(panelEsquerda);
         campos.add(panelDireita);
+        formulario.add(titulo, BorderLayout.NORTH);
         formulario.add(campos);
-        formulario.add(btnCadastrar);
+        formulario.add(btnCadastrar, BorderLayout.SOUTH);
 
         painelPrincipal.add(formulario);
 
@@ -93,6 +96,10 @@ public class CadastroCliente extends JPanel {
                 campoComplemento.getText(),
                 true);
 
-        clienteDao.inserir(cliente);
+        if (clienteDao.inserir(cliente)) {
+            JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso");
+        } else {
+            JOptionPane.showMessageDialog(null, "Não foi possível cadastrar o cliente");
+        }
     }
 }
